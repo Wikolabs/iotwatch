@@ -151,9 +151,14 @@ export default function IoTWatch() {
             Vos capteurs sur le dashboard en 30 min
           </h2>
           <p className="text-teal-100 text-xl mb-10">Compatible avec vos équipements existants. Aucune installation hardware.</p>
-          <a href="mailto:hello@wikolabs.com?subject=IoTWatch — Demande de démo" className="inline-block bg-white text-teal-700 hover:bg-teal-50 px-10 py-5 rounded-xl font-bold text-xl transition-all shadow-xl" style={{ fontFamily: "var(--font-display)" }}>
-            Connecter mon parc IoT →
-          </a>
+          <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
+            <a href="https://calendly.com/wikolabs" target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-teal-700 hover:bg-teal-50 px-10 py-5 rounded-xl font-bold text-xl transition-all shadow-xl" style={{ fontFamily: "var(--font-display)" }}>
+              📅 Réserver un créneau →
+            </a>
+            <a href="https://wa.me/261386626100?text=Bonjour%2C%20je%20souhaite%20discuter%20de%20IoTWatch%20avec%20Wikolabs." target="_blank" rel="noopener noreferrer" className="inline-block px-10 py-5 rounded-xl font-bold text-xl transition-all shadow-xl" style={{ background: "#25d366", borderColor: "#25d366", color: "#fff", fontFamily: "var(--font-display)" }}>
+              💬 WhatsApp →
+            </a>
+          </div>
           <p className="text-teal-200 text-sm mt-5">Essai 30 jours gratuit. Jusqu'à 100 capteurs inclus.</p>
         </div>
       </section>
