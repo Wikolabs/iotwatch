@@ -1,4 +1,4 @@
-export default function IoTWatch() {
+﻿export default function IoTWatch() {
   const sensors = [
     { id: "T-001", label: "Température — Salle serveurs", value: "72.3°C", status: "warning", unit: "°C", pct: 72 },
     { id: "P-042", label: "Pression — Circuit hydraulique", value: "4.2 bar", status: "normal", unit: "bar", pct: 42 },
@@ -169,7 +169,7 @@ export default function IoTWatch() {
           <span className="font-bold text-white text-xl" style={{ fontFamily: "var(--font-display)" }}>IoTWatch</span>
           <p className="text-sm">© 2025 IoTWatch — Un produit <a href="https://wikolabs.com" className="text-cyan-400 hover:text-teal-400 transition-colors">Wikolabs</a></p>
           <div className="flex gap-6 text-sm">
-            <a href="mailto:hello@wikolabs.com" className="hover:text-teal-400 transition-colors">Contact</a>
+            <a href="mailto:team@wikolabs.com" className="hover:text-teal-400 transition-colors">Contact</a>
             <a href="https://wikolabs.com" className="hover:text-teal-400 transition-colors">Wikolabs</a>
           </div>
         </div>
