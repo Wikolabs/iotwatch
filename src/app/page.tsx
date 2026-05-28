@@ -168,9 +168,12 @@
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <span className="font-bold text-white text-xl" style={{ fontFamily: "var(--font-display)" }}>IoTWatch</span>
           <p className="text-sm">© 2025 IoTWatch — Un produit <a href="https://wikolabs.com" className="text-cyan-400 hover:text-teal-400 transition-colors">Wikolabs</a></p>
-          <div className="flex gap-6 text-sm">
-            <a href="mailto:team@wikolabs.com" className="hover:text-teal-400 transition-colors">Contact</a>
-            <a href="https://wikolabs.com" className="hover:text-teal-400 transition-colors">Wikolabs</a>
+          <div className="flex flex-wrap gap-4 text-sm">
+            <a href="mailto:team@wikolabs.com" className="hover:text-teal-400 transition-colors">team@wikolabs.com</a>
+            <span>·</span>
+            <a href="tel:+261386626100" className="hover:text-teal-400 transition-colors">+261 38 66 261 00</a>
+            <span>·</span>
+            <a href="https://calendly.com/wikolabs" target="_blank" rel="noopener noreferrer" className="hover:text-teal-400 transition-colors">Prendre RDV</a>
           </div>
         </div>
       </footer>
