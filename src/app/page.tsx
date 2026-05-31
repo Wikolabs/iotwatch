@@ -1,179 +1,228 @@
-﻿export default function IoTWatch() {
-  const sensors = [
-    { id: "T-001", label: "Température — Salle serveurs", value: "72.3°C", status: "warning", unit: "°C", pct: 72 },
-    { id: "P-042", label: "Pression — Circuit hydraulique", value: "4.2 bar", status: "normal", unit: "bar", pct: 42 },
-    { id: "V-017", label: "Vibration — Moteur #3", value: "12.8 mm/s", status: "critical", unit: "mm/s", pct: 88 },
-    { id: "H-008", label: "Humidité — Entrepôt B", value: "34%", status: "normal", unit: "%", pct: 34 },
-    { id: "T-019", label: "Température — Four #1", value: "521°C", status: "normal", unit: "°C", pct: 52 },
-    { id: "P-003", label: "Pression — Compresseur A", value: "8.9 bar", status: "warning", unit: "bar", pct: 65 },
-  ];
-  const statusColor = { normal: "bg-teal-500", warning: "bg-amber-400", critical: "bg-red-500" };
-  const statusLabel = { normal: "Normal", warning: "Alerte", critical: "Critique" };
-  const statusText = { normal: "text-teal-700", warning: "text-amber-700", critical: "text-red-700" };
-  const statusBg = { normal: "bg-teal-50 border-teal-200", warning: "bg-amber-50 border-amber-200", critical: "bg-red-50 border-red-200 shadow-red-100 shadow-md" };
+﻿"use client";
+
+const P = {
+  name: "IoTWatch",
+  tagLabel: "Monitoring IoT industriel · 10 000 capteurs · Temps reel",
+  taglines: ["10 000 capteurs surveilles.", "1 dashboard unifie.", "0 alerte manquee."],
+  taglineAccentIdx: 1,
+  desc: "IoTWatch centralise l'ensemble de vos capteurs industriels en un dashboard temps reel. MQTT, LoRaWAN, Modbus — branchez vos equipements existants en moins de 30 minutes.",
+  accent: "#22D3EE",
+  accentDim: "rgba(34,211,238,0.1)",
+  accentBorder: "rgba(34,211,238,0.25)",
+  accentGlow: "rgba(34,211,238,0.12)",
+  waText: "IoTWatch",
+  navLinks: [
+    { label: "Fonctionnalites", href: "#features" },
+    { label: "Comment ca marche", href: "#process" },
+    { label: "Contact", href: "#cta" },
+  ],
+  metrics: [
+    { value: "10 000+", label: "capteurs simultanes" },
+    { value: "< 200ms", label: "latence ingestion" },
+    { value: "99.99%", label: "uptime garanti" },
+    { value: "30 min", label: "mise en service" },
+  ],
+  features: [
+    { icon: "📡", title: "Protocoles industriels natifs", desc: "MQTT, LoRaWAN, Modbus RTU/TCP, OPC-UA, AMQP. Connexion directe a vos equipements sans passerelle supplementaire ni configuration complexe." },
+    { icon: "🔔", title: "Alertes predictives intelligentes", desc: "Detection de derives avant le seuil critique. Escalade automatique par SMS, email, webhook ou appel. Zero alerte manquee, zero faux positif." },
+    { icon: "📊", title: "Historique et export complets", desc: "Toutes les donnees conservees 12 mois avec compression intelligente. Export CSV, API REST et connecteur Power BI en un clic." },
+  ],
+  steps: [
+    { num: "01", title: "Connectez vos equipements", desc: "Ajoutez vos capteurs via MQTT, LoRaWAN ou Modbus. Configuration guidee par interface visuelle, aucun code requis. Prise en charge en 30 minutes." },
+    { num: "02", title: "Configurez vos seuils et alertes", desc: "Definissez les seuils d'alerte par capteur, par machine ou par site. Regle d'escalade personnalisable. Historique de derive analyse par l'IA." },
+    { num: "03", title: "Supervisez en temps reel", desc: "Dashboard unifie, alertes instantanees et rapports automatiques. Vos equipes sont notifiees avant que la panne ne survienne." },
+  ],
+  testimonials: [
+    { quote: "Avant IoTWatch, nos techniciens parcouraient l'usine pour relever les capteurs manuellement. Maintenant tout est centralise et on recoit les alertes avant la defaillance.", author: "Marc T.", role: "Directeur des Operations, Groupe Industriel" },
+    { quote: "On a connecte 2 400 capteurs sur 3 sites en moins d'une journee. La latence est inferieure a 200ms et on n'a perdu aucune alerte depuis le deploiement.", author: "Sophie K.", role: "CTO, Scale-up Energie" },
+  ],
+  ctaTitle: "Vos capteurs sur le dashboard en 30 minutes",
+  ctaDesc: "Compatible avec vos equipements existants. Aucune installation hardware. Essai 30 jours. Aucune carte bancaire.",
+  ctaPrimary: "Reserver un creneau",
+  footerTagline: "Monitoring IoT industriel — MQTT, LoRaWAN, Modbus temps reel",
+};
+
+export default function Page() {
+  const bg = "#04080F";
+  const bg2 = "#070D1B";
+  const card = "rgba(255,255,255,0.04)";
+  const border = "rgba(255,255,255,0.09)";
+  const gold = "#D4AF37";
+  const goldDim = "rgba(212,175,55,0.1)";
+  const goldBorder = "rgba(212,175,55,0.28)";
+  const txt1 = "#F0EDE6";
+  const txt2 = "#8B9DB5";
+  const txt3 = "#3C5068";
+  const { accent, accentDim, accentBorder, accentGlow } = P;
 
   return (
-    <div className="min-h-screen" style={{ fontFamily: "var(--font-body)" }}>
+    <div style={{ minHeight: "100vh", background: bg, color: txt1 }}>
+      <style>{`
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes pulseDot { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:.4; transform:scale(1.6); } }
+        .wk-card { transition: background .3s, border-color .3s, transform .35s cubic-bezier(.34,1.2,.64,1); }
+        .wk-card:hover { background: rgba(255,255,255,0.07) !important; border-color: ${accentBorder} !important; transform: translateY(-6px) !important; }
+        .wk-btn { transition: opacity .2s, transform .2s, box-shadow .2s; }
+        .wk-btn:hover { opacity:.9; transform:translateY(-2px); box-shadow:0 12px 32px rgba(212,175,55,.18); }
+        .wk-wa { transition: opacity .2s, transform .2s; }
+        .wk-wa:hover { opacity:.9; transform:translateY(-2px); }
+        .wk-nav-link { color: #8B9DB5; text-decoration:none; font-size:14px; font-weight:500; transition:color .2s; }
+        .wk-nav-link:hover { color: #F0EDE6; }
+        @media(max-width:640px){ .wk-hide-sm{ display:none!important; } .wk-hero-title{ font-size:2.4rem!important; } }
+      `}</style>
 
       {/* NAVBAR */}
-      <nav className="fixed top-0 w-full z-50 bg-cyan-900/95 backdrop-blur border-b border-cyan-800">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-teal-400 flex items-center justify-center">
-              <svg className="w-5 h-5 text-cyan-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="currentColor" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-            </div>
-            <span className="font-bold text-white text-xl" style={{ fontFamily: "var(--font-display)" }}>IoTWatch</span>
+      <nav style={{ position:"sticky", top:0, zIndex:100, background:"rgba(4,8,15,0.82)", backdropFilter:"blur(20px)", borderBottom:`1px solid ${border}`, padding:"0 40px", height:60, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+        <span style={{ fontSize:18, fontWeight:800, letterSpacing:"-0.5px", color:txt1 }}>
+          {P.name}<span style={{ color:gold }}>.</span>
+        </span>
+        <div style={{ display:"flex", gap:28, alignItems:"center" }}>
+          <div className="wk-hide-sm" style={{ display:"flex", gap:24 }}>
+            {P.navLinks.map(l => <a key={l.label} href={l.href} className="wk-nav-link">{l.label}</a>)}
           </div>
-          <div className="hidden md:flex items-center gap-8 text-sm text-cyan-300">
-            <a href="#dashboard" className="hover:text-white transition-colors">Dashboard</a>
-            <a href="#features" className="hover:text-white transition-colors">Fonctionnalités</a>
-            <a href="#protocols" className="hover:text-white transition-colors">Protocoles</a>
-          </div>
-          <a href="#cta" className="bg-teal-400 text-cyan-900 px-5 py-2 rounded-lg font-bold text-sm hover:bg-teal-300 transition-colors" style={{ fontFamily: "var(--font-display)" }}>
-            Démo gratuite
-          </a>
+          <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' className="wk-btn"
+            style={{ background:gold, color:"#04080F", border:"none", borderRadius:8, padding:"8px 18px", fontWeight:700, fontSize:13.5, cursor:"pointer", fontFamily:"inherit" }}>
+            Reserver →
+          </button>
         </div>
       </nav>
 
       {/* HERO */}
-      <section className="pt-32 pb-20 bg-gradient-to-br from-cyan-900 via-cyan-800 to-teal-800 relative overflow-hidden">
-        <div className="absolute top-20 right-0 w-80 h-80 bg-teal-500 rounded-full blur-3xl opacity-10 pointer-events-none" />
-        <div className="max-w-5xl mx-auto px-6 relative">
-          <div className="inline-flex items-center gap-2 bg-teal-400/20 text-teal-300 border border-teal-400/40 px-4 py-2 rounded-full text-sm font-bold mb-8" style={{ fontFamily: "var(--font-display)" }}>
-            <span className="w-2 h-2 bg-teal-400 rounded-full animate-pulse" />
-            10 847 capteurs actifs en ce moment
-          </div>
-          <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight mb-6" style={{ fontFamily: "var(--font-display)" }}>
-            10 000 capteurs.<br />
-            <span className="text-teal-400">1 dashboard.</span><br />
-            0 alerte manquée.
-          </h1>
-          <p className="text-cyan-200 text-xl max-w-2xl mb-10 leading-relaxed">
-            Collecte, analyse et alertes temps réel pour parcs IoT industriels.
-            MQTT, LoRaWAN, Modbus — branchez vos équipements existants en quelques minutes.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <a href="#cta" className="bg-teal-400 text-cyan-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-teal-300 transition-colors" style={{ fontFamily: "var(--font-display)" }}>
-              Connecter mon parc IoT →
-            </a>
-            <a href="#dashboard" className="border-2 border-cyan-600 text-white hover:border-teal-400 hover:text-teal-400 px-8 py-4 rounded-lg font-bold text-lg transition-colors" style={{ fontFamily: "var(--font-display)" }}>
-              Voir le dashboard
-            </a>
-          </div>
+      <section style={{ padding:"100px 40px 80px", maxWidth:1000, margin:"0 auto", textAlign:"center", position:"relative" }}>
+        <div style={{ position:"absolute", top:-60, left:"50%", transform:"translateX(-50%)", width:700, height:600, background:`radial-gradient(ellipse at 50% 30%, ${accentGlow} 0%, transparent 60%)`, pointerEvents:"none" }} />
+        <div style={{ display:"inline-flex", alignItems:"center", gap:8, marginBottom:24, background:accentDim, border:`1px solid ${accentBorder}`, borderRadius:100, padding:"6px 18px", animation:"fadeUp .5s ease both" }}>
+          <span style={{ width:7, height:7, borderRadius:"50%", background:accent, display:"inline-block", animation:"pulseDot 2s ease-in-out infinite" }} />
+          <span style={{ color:accent, fontSize:11.5, fontWeight:700, letterSpacing:"2px", textTransform:"uppercase" }}>{P.tagLabel}</span>
         </div>
-      </section>
-
-      {/* LIVE DASHBOARD MOCKUP */}
-      <section id="dashboard" className="py-20 bg-cyan-50">
-        <div className="max-w-5xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-cyan-900 text-center mb-4" style={{ fontFamily: "var(--font-display)" }}>
-            Dashboard temps réel
-          </h2>
-          <p className="text-cyan-600 text-center mb-12">Toutes vos machines. Tous vos sites. Un seul écran.</p>
-
-          {/* Status bar */}
-          <div className="flex items-center justify-between bg-cyan-900 text-white rounded-t-xl px-6 py-3 text-sm font-bold" style={{ fontFamily: "var(--font-display)" }}>
-            <span>IoTWatch — Tableau de bord industriel</span>
-            <div className="flex items-center gap-4">
-              <span className="flex items-center gap-1.5 text-teal-400"><span className="w-2 h-2 bg-teal-400 rounded-full animate-pulse" />LIVE</span>
-              <span className="text-cyan-400">10 847 capteurs</span>
+        <h1 className="wk-hero-title" style={{ fontSize:"clamp(2.6rem,6vw,5rem)", fontWeight:700, lineHeight:1.08, letterSpacing:"-0.03em", marginBottom:28, fontFamily:"'Instrument Serif',Georgia,serif", animation:"fadeUp .5s .08s ease both" }}>
+          {P.taglines.map((line, i) => (
+            <span key={i} style={{ display:"block", color:i===P.taglineAccentIdx?accent:txt1, fontStyle:i===P.taglineAccentIdx?"italic":"normal" }}>{line}</span>
+          ))}
+        </h1>
+        <p style={{ fontSize:"1.1rem", color:txt2, lineHeight:1.72, maxWidth:580, margin:"0 auto 48px", animation:"fadeUp .5s .16s ease both" }}>{P.desc}</p>
+        <div style={{ display:"flex", flexWrap:"wrap", justifyContent:"center", gap:14, marginBottom:44, animation:"fadeUp .5s .24s ease both" }}>
+          {P.metrics.map(m => (
+            <div key={m.label} style={{ background:card, border:`1px solid ${border}`, borderRadius:18, padding:"14px 22px", textAlign:"center", minWidth:118 }}>
+              <div style={{ fontSize:"1.7rem", fontWeight:800, color:txt1, letterSpacing:"-1.5px", lineHeight:1 }}>{m.value}</div>
+              <div style={{ fontSize:"0.62rem", color:txt3, textTransform:"uppercase", letterSpacing:"1.5px", marginTop:5 }}>{m.label}</div>
             </div>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-4 bg-slate-100 p-4 rounded-b-xl border border-t-0 border-slate-200 shadow-xl">
-            {sensors.map((s) => (
-              <div key={s.id} className={`${statusBg[s.status as keyof typeof statusBg]} border rounded-xl p-4`}>
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <span className="text-xs text-gray-500 font-mono">{s.id}</span>
-                    <p className="text-xs text-gray-600 mt-0.5 leading-tight">{s.label}</p>
-                  </div>
-                  <span className={`inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded-full ${statusText[s.status as keyof typeof statusText]}`} style={{ fontFamily: "var(--font-display)" }}>
-                    <span className={`w-1.5 h-1.5 rounded-full ${statusColor[s.status as keyof typeof statusColor]}`} />
-                    {statusLabel[s.status as keyof typeof statusLabel]}
-                  </span>
-                </div>
-                <div className="text-2xl font-bold text-gray-900 mb-2" style={{ fontFamily: "var(--font-display)" }}>{s.value}</div>
-                <div className="w-full bg-gray-200 rounded-full h-1.5">
-                  <div className={`h-1.5 rounded-full ${statusColor[s.status as keyof typeof statusColor]}`} style={{ width: `${s.pct}%` }} />
-                </div>
-              </div>
-            ))}
-          </div>
+          ))}
+        </div>
+        <div style={{ display:"flex", flexWrap:"wrap", gap:12, justifyContent:"center", animation:"fadeUp .5s .32s ease both" }}>
+          <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' className="wk-btn"
+            style={{ background:gold, color:"#04080F", border:"none", borderRadius:10, padding:"14px 28px", fontWeight:700, fontSize:15, cursor:"pointer", display:"flex", alignItems:"center", gap:8, fontFamily:"inherit" }}>
+            📅 {P.ctaPrimary}
+          </button>
+          <a href={`https://wa.me/261386626100?text=Bonjour%2C%20je%20souhaite%20discuter%20de%20${encodeURIComponent(P.waText)}%20avec%20Wikolabs.`}
+            target="_blank" rel="noopener noreferrer" className="wk-wa"
+            style={{ background:"#25d366", color:"#fff", borderRadius:10, padding:"14px 28px", fontWeight:700, fontSize:15, textDecoration:"none", display:"flex", alignItems:"center", gap:8 }}>
+            💬 WhatsApp
+          </a>
         </div>
       </section>
 
       {/* FEATURES */}
-      <section id="features" className="py-20 bg-white">
-        <div className="max-w-5xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-cyan-900 text-center mb-14" style={{ fontFamily: "var(--font-display)" }}>
-            Conçu pour l'industrie
+      <section id="features" style={{ padding:"80px 40px", maxWidth:1100, margin:"0 auto" }}>
+        <div style={{ textAlign:"center", marginBottom:52 }}>
+          <p style={{ fontSize:"0.68rem", color:gold, letterSpacing:"3px", textTransform:"uppercase", fontWeight:700, marginBottom:14 }}>Fonctionnalites</p>
+          <h2 style={{ fontSize:"clamp(1.8rem,3.5vw,2.8rem)", fontWeight:700, color:txt1, letterSpacing:"-0.02em", fontFamily:"'Instrument Serif',Georgia,serif", lineHeight:1.15 }}>
+            Concu pour l'industrie, <em style={{ fontStyle:"italic", color:gold }}>deploye en 30 minutes</em>
           </h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { icon: "📡", title: "Protocoles industriels", desc: "MQTT, LoRaWAN, Modbus RTU/TCP, OPC-UA, AMQP. Connexion native à vos équipements sans passerelle supplémentaire.", color: "border-teal-200 bg-teal-50" },
-              { icon: "🔔", title: "Alertes prédictives", desc: "Détection de dérives avant le seuil critique. Escalade automatique par SMS, email, webhook ou appel téléphonique.", color: "border-amber-200 bg-amber-50" },
-              { icon: "📈", title: "Historique 1 an", desc: "Toutes les données conservées 12 mois avec compression intelligente. Export CSV, API REST, connecteur Power BI.", color: "border-cyan-200 bg-cyan-50" },
-            ].map((f) => (
-              <div key={f.title} className={`${f.color} border rounded-2xl p-7`}>
-                <div className="text-4xl mb-4">{f.icon}</div>
-                <h3 className="font-bold text-cyan-900 text-lg mb-3" style={{ fontFamily: "var(--font-display)" }}>{f.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{f.desc}</p>
+        </div>
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))", gap:20 }}>
+          {P.features.map((f, i) => (
+            <div key={f.title} className="wk-card" style={{ background:card, border:`1px solid ${border}`, borderRadius:20, padding:"28px 28px 24px", position:"relative", overflow:"hidden" }}>
+              <div style={{ position:"absolute", top:0, left:0, right:0, height:2, background:`linear-gradient(90deg,transparent,${i===0?gold:accent},transparent)`, opacity:.6 }} />
+              <div style={{ fontSize:"2rem", marginBottom:16 }}>{f.icon}</div>
+              <h3 style={{ fontSize:"1.05rem", fontWeight:700, color:txt1, marginBottom:10 }}>{f.title}</h3>
+              <p style={{ fontSize:"0.88rem", color:txt2, lineHeight:1.7, margin:0 }}>{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* HOW IT WORKS */}
+      <section id="process" style={{ padding:"80px 40px", background:bg2 }}>
+        <div style={{ maxWidth:860, margin:"0 auto" }}>
+          <div style={{ textAlign:"center", marginBottom:48 }}>
+            <p style={{ fontSize:"0.68rem", color:gold, letterSpacing:"3px", textTransform:"uppercase", fontWeight:700, marginBottom:14 }}>Comment ca marche</p>
+            <h2 style={{ fontSize:"clamp(1.8rem,3.5vw,2.8rem)", fontWeight:700, color:txt1, letterSpacing:"-0.02em", fontFamily:"'Instrument Serif',Georgia,serif" }}>
+              En service en <em style={{ fontStyle:"italic", color:accent }}>30 minutes</em>
+            </h2>
+          </div>
+          <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
+            {P.steps.map((s, i) => (
+              <div key={s.num} style={{ display:"flex", alignItems:"flex-start", gap:22, background:card, border:`1px solid ${border}`, borderRadius:18, padding:"22px 26px" }}>
+                <div style={{ flexShrink:0, width:46, height:46, background:i===0?goldDim:accentDim, border:`1px solid ${i===0?goldBorder:accentBorder}`, borderRadius:14, display:"flex", alignItems:"center", justifyContent:"center", color:i===0?gold:accent, fontWeight:800, fontSize:15 }}>
+                  {s.num}
+                </div>
+                <div>
+                  <h3 style={{ fontSize:"1rem", fontWeight:700, color:txt1, marginBottom:6, lineHeight:1.3 }}>{s.title}</h3>
+                  <p style={{ fontSize:"0.87rem", color:txt2, lineHeight:1.7, margin:0 }}>{s.desc}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* STATS */}
-      <section id="protocols" className="py-20 bg-cyan-900">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-6 text-center mb-16">
-            {[
-              { value: "10 000+", label: "capteurs simultanés" },
-              { value: "< 200ms", label: "latence d'ingestion" },
-              { value: "99.99%", label: "uptime garanti" },
-              { value: "0", label: "alerte manquée" },
-            ].map((s) => (
-              <div key={s.label} className="p-6 bg-cyan-800 rounded-2xl border border-cyan-700">
-                <div className="text-3xl font-bold text-teal-400 mb-2" style={{ fontFamily: "var(--font-display)" }}>{s.value}</div>
-                <div className="text-cyan-300 text-sm">{s.label}</div>
+      {/* TESTIMONIALS */}
+      <section style={{ padding:"80px 40px", maxWidth:900, margin:"0 auto" }}>
+        <div style={{ textAlign:"center", marginBottom:44 }}>
+          <p style={{ fontSize:"0.68rem", color:gold, letterSpacing:"3px", textTransform:"uppercase", fontWeight:700, marginBottom:14 }}>Temoignages</p>
+          <h2 style={{ fontSize:"clamp(1.6rem,3vw,2.4rem)", fontWeight:700, color:txt1, fontFamily:"'Instrument Serif',Georgia,serif" }}>Ce qu'en disent nos clients</h2>
+        </div>
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(340px,1fr))", gap:20 }}>
+          {P.testimonials.map((t, i) => (
+            <div key={i} style={{ background:card, border:`1px solid ${border}`, borderLeft:`3px solid ${i===0?gold:accent}`, borderRadius:20, padding:"26px 26px 22px" }}>
+              <p style={{ fontSize:"0.92rem", color:txt2, lineHeight:1.75, fontStyle:"italic", marginBottom:20 }}>&ldquo;{t.quote}&rdquo;</p>
+              <div style={{ display:"flex", alignItems:"center", gap:12 }}>
+                <div style={{ width:38, height:38, borderRadius:"50%", background:i===0?goldDim:accentDim, border:`1px solid ${i===0?goldBorder:accentBorder}`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:16 }}>👤</div>
+                <div>
+                  <div style={{ fontSize:"0.9rem", fontWeight:700, color:txt1 }}>{t.author}</div>
+                  <div style={{ fontSize:"0.72rem", color:txt3 }}>{t.role}</div>
+                </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* CTA */}
-      <section id="cta" className="py-20 bg-teal-600">
-        <div className="max-w-2xl mx-auto px-6 text-center">
-          <h2 className="text-4xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-display)" }}>
-            Vos capteurs sur le dashboard en 30 min
-          </h2>
-          <p className="text-teal-100 text-xl mb-10">Compatible avec vos équipements existants. Aucune installation hardware.</p>
-          <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-            <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' type="button" target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-teal-700 hover:bg-teal-50 px-10 py-5 rounded-xl font-bold text-xl transition-all shadow-xl" style={{ fontFamily: "var(--font-display)" }}>
-              📅 Réserver un créneau →
+      <section id="cta" style={{ padding:"0 40px 100px", maxWidth:860, margin:"0 auto" }}>
+        <div style={{ background:card, border:`1px solid ${goldBorder}`, borderRadius:24, padding:"64px 48px", textAlign:"center", backgroundImage:`radial-gradient(ellipse at 50% 0%, ${goldDim} 0%, transparent 65%)` }}>
+          <p style={{ fontSize:"0.68rem", color:gold, letterSpacing:"3px", textTransform:"uppercase", fontWeight:700, marginBottom:16 }}>Demarrer</p>
+          <h2 style={{ fontSize:"clamp(1.8rem,3.5vw,2.8rem)", fontWeight:700, color:txt1, marginBottom:14, letterSpacing:"-0.02em", fontFamily:"'Instrument Serif',Georgia,serif" }}>{P.ctaTitle}</h2>
+          <p style={{ color:txt2, fontSize:"1rem", marginBottom:36, lineHeight:1.7 }}>{P.ctaDesc}</p>
+          <div style={{ display:"flex", flexWrap:"wrap", gap:12, justifyContent:"center" }}>
+            <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' className="wk-btn"
+              style={{ background:gold, color:"#04080F", border:"none", borderRadius:10, padding:"14px 28px", fontWeight:700, fontSize:15, cursor:"pointer", display:"flex", alignItems:"center", gap:8, fontFamily:"inherit" }}>
+              📅 {P.ctaPrimary}
             </button>
-            <a href="https://wa.me/261386626100?text=Bonjour%2C%20je%20souhaite%20discuter%20de%20IoTWatch%20avec%20Wikolabs." target="_blank" rel="noopener noreferrer" className="inline-block px-10 py-5 rounded-xl font-bold text-xl transition-all shadow-xl" style={{ background: "#25d366", borderColor: "#25d366", color: "#fff", fontFamily: "var(--font-display)" }}>
-              💬 WhatsApp →
+            <a href={`https://wa.me/261386626100?text=Bonjour%2C%20je%20souhaite%20discuter%20de%20${encodeURIComponent(P.waText)}%20avec%20Wikolabs.`}
+              target="_blank" rel="noopener noreferrer" className="wk-wa"
+              style={{ background:"#25d366", color:"#fff", borderRadius:10, padding:"14px 28px", fontWeight:700, fontSize:15, textDecoration:"none", display:"flex", alignItems:"center", gap:8 }}>
+              💬 WhatsApp
             </a>
           </div>
-          <p className="text-teal-200 text-sm mt-5">Essai 30 jours gratuit. Jusqu'à 100 capteurs inclus.</p>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-cyan-950 text-cyan-500 py-10">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <span className="font-bold text-white text-xl" style={{ fontFamily: "var(--font-display)" }}>IoTWatch</span>
-          <p className="text-sm">© 2025 IoTWatch — Un produit <a href="https://wikolabs.com" className="text-cyan-400 hover:text-teal-400 transition-colors">Wikolabs</a></p>
-          <div className="flex flex-wrap gap-4 text-sm">
-            <a href="mailto:team@wikolabs.com" className="hover:text-teal-400 transition-colors">team@wikolabs.com</a>
-            <span>·</span>
-            <a href="tel:+261386626100" className="hover:text-teal-400 transition-colors">+261 38 66 261 00</a>
-            <span>·</span>
-            <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' type="button" target="_blank" rel="noopener noreferrer" className="hover:text-teal-400 transition-colors" style={{cursor:"pointer",background:"none",border:"none",padding:0,font:"inherit",color:"inherit",textDecoration:"none"}}>Prendre RDV</button>
+      <footer style={{ borderTop:`1px solid ${border}`, padding:"32px 40px" }}>
+        <div style={{ maxWidth:1200, margin:"0 auto", display:"flex", flexWrap:"wrap", justifyContent:"space-between", alignItems:"center", gap:16 }}>
+          <div>
+            <span style={{ fontWeight:800, fontSize:16, color:txt1 }}>{P.name}</span><span style={{ color:gold }}>.</span>
+            <span style={{ display:"block", fontSize:12, color:txt3, marginTop:3 }}>{P.footerTagline}</span>
+          </div>
+          <p style={{ fontSize:13, color:txt3 }}>© 2026 {P.name} — Un produit <a href="https://wikolabs.com" style={{ color:txt2, textDecoration:"none" }}>Wikolabs</a></p>
+          <div style={{ display:"flex", flexWrap:"wrap", gap:16, fontSize:13, alignItems:"center" }}>
+            <a href="mailto:team@wikolabs.com" style={{ color:txt3, textDecoration:"none" }}>team@wikolabs.com</a>
+            <span style={{ color:txt3 }}>·</span>
+            <button data-cal-link="wikolabs-team/30min" data-cal-namespace="wk30min" data-cal-config='{"layout":"month_view"}' style={{ background:"none", border:"none", color:txt3, fontSize:13, cursor:"pointer", fontFamily:"inherit", padding:0 }}>Prendre RDV</button>
           </div>
         </div>
       </footer>
