@@ -1,0 +1,36 @@
+version: "3.9"
+
+# IoTWatch demo — production-ready POC.
+# 2 services orchestrated:
+#   - iotwatch (Next.js frontend on host port 3029)
+#   - iotwatch-backend (FastAPI Python, internal only on 8000)
+# Internal network so the frontend can reach the backend by service name.
+
+services:
+  iotwatch-backend:
+    image: ghcr.io/wikolabs/iotwatch-backend:latest
+    container_name: iotwatch-backend
+    restart: unless-stopped
+    environment:
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    networks:
+      - iotwatch-net
+
+  iotwatch:
+    image: ghcr.io/wikolabs/iotwatch:latest
+    container_name: iotwatch
+    restart: unless-stopped
+    ports:
+      - "3029:3000"
+    environment:
+      BACKEND_URL: "http://iotwatch-backend:8000"
+    depends_on:
+      - iotwatch-backend
+    networks:
+      - iotwatch-net
+
+networks:
+  iotwatch-net:
+    name: iotwatch-net
+    driver: bridge
